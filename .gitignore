@@ -1,33 +1,75 @@
-HELP.md
+# ===============================
+# Maven / Java
+# ===============================
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+*.log
+*.class
+*.jar
+*.war
+*.ear
 *.iml
 *.ipr
+*.iws
+*.db
+*.DS_Store
 
-### NetBeans ###
+# Ignore Maven wrapper jar (optional)
+.mvn/wrapper/maven-wrapper.jar
+
+# ===============================
+# IDEs
+# ===============================
+
+## IntelliJ IDEA ##
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+## Eclipse / STS ##
+.classpath
+.project
+.settings/
+.springBeans
+.apt_generated
+.sts4-cache
+
+## NetBeans ##
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+
+## VS Code ##
+.vscode/
+
+# ===============================
+# Environment / Secrets
+# ===============================
+.env
+*.env
+secrets.properties
+
+# ===============================
+# Docker
+# ===============================
+docker-compose.override.yml
+*.dockerignore
+*.tar
+
+# ===============================
+# Build folders to keep only source
+# ===============================
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# ===============================
+# Misc
+# ===============================
+*.swp
+*.swo
+*.tmp
