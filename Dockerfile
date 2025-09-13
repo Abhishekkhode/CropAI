@@ -1,19 +1,24 @@
-# Use official OpenJDK 17 image
-FROM openjdk:17-jdk-slim
-
-# Set working directory inside container
+# Stage 1: Build the app
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy the built jar file into the container
-COPY target/CropAI-0.0.1-SNAPSHOT.jar app.jar
+# Copy pom.xml and download dependencies first (for caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Expose port 8080
+# Copy source and build
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the app
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+# Copy the jar from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose Spring Boot default port
 EXPOSE 8080
 
-# Pass environment variables from Docker or Render
-ENV TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
-ENV TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
-ENV TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
-
-# Run the Spring Boot app
-ENTRYPOINT ["java","-jar","app.jar"]
+# Run the jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
